@@ -36,6 +36,7 @@ import {
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import { ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/" },

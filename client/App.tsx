@@ -31,7 +31,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
 
-          <Route element={<AlumniLayout />}>
+          <Route element={<ProtectedRoute><AlumniLayout /></ProtectedRoute>}>
             <Route path="dashboard" element={<Index />} />
             <Route path="directory" element={<Directory />} />
             <Route path="events" element={<Events />} />

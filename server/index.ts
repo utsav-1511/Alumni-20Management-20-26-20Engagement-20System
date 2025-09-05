@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
 
-export function createServer() {
+export async function createServer() {
   const app = express();
 
   // Middleware

@@ -13,10 +13,40 @@ export default function Login() {
   const [remember, setRemember] = useState(true);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: connect to auth - for now redirect to dashboard
-    navigate("/");
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) return alert(data.error || 'Login failed');
+      // store token
+      localStorage.setItem('token', data.token);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      alert('Login error');
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, role }),
+      });
+      const data = await res.json();
+      if (!res.ok) return alert(data.error || 'Signup failed');
+      localStorage.setItem('token', data.token);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      alert('Signup error');
+    }
   };
 
   return (

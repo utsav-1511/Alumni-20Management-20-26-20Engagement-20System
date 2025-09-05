@@ -165,7 +165,13 @@ export default function Landing() {
                   {mode === "login" ? "Login" : "Sign Up"}
                 </Button>
 
-                <Button variant="ghost" onClick={() => { localStorage.setItem('DEV_BYPASS_AUTH','true'); navigate('/dashboard'); }}>
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    localStorage.setItem("DEV_BYPASS_AUTH", "true");
+                    navigate("/dashboard");
+                  }}
+                >
                   Continue to Dashboard (skip login)
                 </Button>
               </div>

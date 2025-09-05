@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { prisma } from "@/prisma";
+import { prisma } from "../prisma";
 
 export const listAlumni: RequestHandler = async (req, res) => {
   const all = await prisma.alumni.findMany({ orderBy: { createdAt: "desc" } });

@@ -47,19 +47,46 @@ const navItems = [
 
 function Topbar() {
   return (
-    <div className="sticky top-0 z-10 flex items-center justify-between gap-2 border-b bg-white/90 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-      <div className="flex items-center gap-2">
-        <SidebarTrigger className="md:hidden" />
-        <span className="text-lg font-semibold text-primary">Alumni Hub</span>
-      </div>
+    <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b bg-white/90 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="flex items-center gap-3">
-        <Button variant="outline" className="hidden sm:inline-flex">
-          Invite
-        </Button>
-        <Avatar className="h-8 w-8">
-          <AvatarImage src="https://i.pravatar.cc/64" alt="User" />
-          <AvatarFallback>UK</AvatarFallback>
-        </Avatar>
+        <SidebarTrigger className="md:hidden" />
+        <div>
+          <div className="text-lg font-semibold text-primary">Alumni Hub</div>
+          <div className="text-xs text-muted-foreground">Admin Dashboard</div>
+        </div>
+      </div>
+
+      <div className="flex flex-1 items-center justify-center">
+        <h1 className="text-lg font-semibold text-slate-800">Dashboard</h1>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
+          <div className="relative w-72">
+            <Input placeholder="Search alumni, events..." />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          </div>
+        </div>
+
+        <Button className="hidden sm:inline-flex">Invite Alumni</Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 rounded-md">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="https://i.pravatar.cc/64" alt="User" />
+                <AvatarFallback>UK</AvatarFallback>
+              </Avatar>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Sign out</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
@@ -69,7 +96,7 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
   const location = useLocation();
   return (
     <SidebarProvider>
-      <Sidebar className="border-r">
+      <Sidebar className="border-r" collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-white font-bold">

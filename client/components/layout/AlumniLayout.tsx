@@ -121,7 +121,7 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
                   <SidebarMenuItem key={label}>
                     <SidebarMenuButton
                       asChild
-                      isActive={location.pathname === to}
+                      isActive={location.pathname === to || location.pathname.startsWith(to + "/") }
                     >
                       <Link to={to} className="flex items-center gap-2">
                         <Icon className="text-primary" />

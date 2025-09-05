@@ -55,6 +55,15 @@ export async function createServer() {
     app.get("/api/forum/posts/:id", forum.getPost);
     app.delete("/api/forum/posts/:id", requireAuth, forum.deletePost);
     console.log("Mounted forum routes");
+
+    // Chat (SSE + REST)
+    const chat = await import("./routes/chat");
+    app.get("/api/chat/rooms", chat.listRooms);
+    app.post("/api/chat/rooms", requireAuth, chat.createRoom);
+    app.get("/api/chat/rooms/:id/messages", chat.listMessages);
+    app.post("/api/chat/rooms/:id/messages", requireAuth, chat.postMessage);
+    app.get("/api/chat/rooms/:id/subscribe", chat.subscribe);
+    console.log("Mounted chat routes");
   } catch (err) {
     console.error("Error mounting routes:", err);
     const msg =

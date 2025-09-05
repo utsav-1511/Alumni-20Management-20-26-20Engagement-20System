@@ -16,46 +16,57 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       let data: any = null;
-      try { data = await res.json(); } catch (e) { /* ignore json parse */ }
+      try {
+        data = await res.json();
+      } catch (e) {
+        /* ignore json parse */
+      }
       if (!res.ok) {
-        const message = data?.error || (data && data.message) || `${res.status} ${res.statusText}`;
-        console.error('Login failed', res.status, data);
-        return alert(message || 'Login failed');
+        const message =
+          data?.error ||
+          (data && data.message) ||
+          `${res.status} ${res.statusText}`;
+        console.error("Login failed", res.status, data);
+        return alert(message || "Login failed");
       }
       // store token
-      localStorage.setItem('token', data.token);
-      navigate('/');
+      localStorage.setItem("token", data.token);
+      navigate("/");
     } catch (err) {
       console.error(err);
-      alert('Login error');
+      alert("Login error");
     }
   };
 
   const handleSignup = async () => {
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role }),
       });
       let data: any = null;
-      try { data = await res.json(); } catch (e) { /* ignore */ }
+      try {
+        data = await res.json();
+      } catch (e) {
+        /* ignore */
+      }
       if (!res.ok) {
         const msg = data?.error || `${res.status} ${res.statusText}`;
-        console.error('Signup failed', res.status, data);
-        return alert(msg || 'Signup failed');
+        console.error("Signup failed", res.status, data);
+        return alert(msg || "Signup failed");
       }
-      localStorage.setItem('token', data.token);
-      navigate('/');
+      localStorage.setItem("token", data.token);
+      navigate("/");
     } catch (err) {
       console.error(err);
-      alert('Signup error');
+      alert("Signup error");
     }
   };
 

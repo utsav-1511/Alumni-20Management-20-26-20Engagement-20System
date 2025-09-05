@@ -8,7 +8,9 @@ export const listAlumni: RequestHandler = async (req, res) => {
 
 export const createAlumni: RequestHandler = async (req, res) => {
   const { name, avatar, batch, company, role } = req.body;
-  const a = await prisma.alumni.create({ data: { name, avatar, batch, company, role } });
+  const a = await prisma.alumni.create({
+    data: { name, avatar, batch, company, role },
+  });
   res.json(a);
 };
 

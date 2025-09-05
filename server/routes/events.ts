@@ -8,7 +8,9 @@ export const listEvents: RequestHandler = async (req, res) => {
 
 export const createEvent: RequestHandler = async (req, res) => {
   const { title, date, location, cover } = req.body;
-  const e = await prisma.event.create({ data: { title, date, location, cover } });
+  const e = await prisma.event.create({
+    data: { title, date, location, cover },
+  });
   res.json(e);
 };
 

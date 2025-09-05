@@ -1,12 +1,29 @@
-/**
- * Shared code between client and server
- * Useful to share types between client and server
- * and/or small pure JS functions that can be used on both client and server
- */
+export interface AuthResponse {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+  };
+}
 
-/**
- * Example response type for /api/demo
- */
 export interface DemoResponse {
   message: string;
+}
+
+export interface AlumniItem {
+  id: string;
+  name: string;
+  avatar?: string;
+  batch?: string;
+  company?: string;
+  role?: string;
+}
+
+export interface EventItem {
+  id: string;
+  title: string;
+  date: string;
+  location?: string;
+  cover?: string;
 }

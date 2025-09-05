@@ -21,8 +21,13 @@ export default function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
-      if (!res.ok) return alert(data.error || 'Login failed');
+      let data: any = null;
+      try { data = await res.json(); } catch (e) { /* ignore json parse */ }
+      if (!res.ok) {
+        const message = data?.error || (data && data.message) || `${res.status} ${res.statusText}`;
+        console.error('Login failed', res.status, data);
+        return alert(message || 'Login failed');
+      }
       // store token
       localStorage.setItem('token', data.token);
       navigate('/');
@@ -39,8 +44,13 @@ export default function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, role }),
       });
-      const data = await res.json();
-      if (!res.ok) return alert(data.error || 'Signup failed');
+      let data: any = null;
+      try { data = await res.json(); } catch (e) { /* ignore */ }
+      if (!res.ok) {
+        const msg = data?.error || `${res.status} ${res.statusText}`;
+        console.error('Signup failed', res.status, data);
+        return alert(msg || 'Signup failed');
+      }
       localStorage.setItem('token', data.token);
       navigate('/');
     } catch (err) {

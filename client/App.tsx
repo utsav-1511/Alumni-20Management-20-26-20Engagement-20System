@@ -30,4 +30,9 @@ const App = () => (
   </QueryClientProvider>
 );
 
-createRoot(document.getElementById("root")!).render(<App />);
+const container = document.getElementById("root")!;
+// Reuse an existing root if HMR or repeated imports occur to avoid calling createRoot twice.
+if (!(window as any).__REACT_ROOT__) {
+  (window as any).__REACT_ROOT__ = createRoot(container);
+}
+;(window as any).__REACT_ROOT__.render(<App />);

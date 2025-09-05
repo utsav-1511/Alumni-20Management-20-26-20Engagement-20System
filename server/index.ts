@@ -19,37 +19,45 @@ export async function createServer() {
 
   app.get("/api/demo", handleDemo);
 
-  // Auth
-  const { register, login, logout } = await import("./routes/auth");
-  app.post("/api/auth/register", register);
-  app.post("/api/auth/login", login);
-  app.post("/api/auth/logout", logout);
+  try {
+    // Auth
+    const { register, login, logout } = await import("./routes/auth");
+    app.post("/api/auth/register", register);
+    app.post("/api/auth/login", login);
+    app.post("/api/auth/logout", logout);
+    console.log("Mounted auth routes: /api/auth/(register|login|logout)");
 
-  // Protected routes
-  const { requireAuth } = await import("./middleware/auth");
+    // Protected routes
+    const { requireAuth } = await import("./middleware/auth");
 
-  // Alumni
-  const alumni = await import("./routes/alumni");
-  app.get("/api/alumni", alumni.listAlumni);
-  app.post("/api/alumni", requireAuth, alumni.createAlumni);
-  app.get("/api/alumni/:id", alumni.getAlumni);
-  app.put("/api/alumni/:id", requireAuth, alumni.updateAlumni);
-  app.delete("/api/alumni/:id", requireAuth, alumni.deleteAlumni);
+    // Alumni
+    const alumni = await import("./routes/alumni");
+    app.get("/api/alumni", alumni.listAlumni);
+    app.post("/api/alumni", requireAuth, alumni.createAlumni);
+    app.get("/api/alumni/:id", alumni.getAlumni);
+    app.put("/api/alumni/:id", requireAuth, alumni.updateAlumni);
+    app.delete("/api/alumni/:id", requireAuth, alumni.deleteAlumni);
+    console.log("Mounted alumni routes");
 
-  // Events
-  const events = await import("./routes/events");
-  app.get("/api/events", events.listEvents);
-  app.post("/api/events", requireAuth, events.createEvent);
-  app.get("/api/events/:id", events.getEvent);
-  app.put("/api/events/:id", requireAuth, events.updateEvent);
-  app.delete("/api/events/:id", requireAuth, events.deleteEvent);
+    // Events
+    const events = await import("./routes/events");
+    app.get("/api/events", events.listEvents);
+    app.post("/api/events", requireAuth, events.createEvent);
+    app.get("/api/events/:id", events.getEvent);
+    app.put("/api/events/:id", requireAuth, events.updateEvent);
+    app.delete("/api/events/:id", requireAuth, events.deleteEvent);
+    console.log("Mounted events routes");
 
-  // Forum
-  const forum = await import("./routes/forum");
-  app.get("/api/forum/posts", forum.listPosts);
-  app.post("/api/forum/posts", requireAuth, forum.createPost);
-  app.get("/api/forum/posts/:id", forum.getPost);
-  app.delete("/api/forum/posts/:id", requireAuth, forum.deletePost);
+    // Forum
+    const forum = await import("./routes/forum");
+    app.get("/api/forum/posts", forum.listPosts);
+    app.post("/api/forum/posts", requireAuth, forum.createPost);
+    app.get("/api/forum/posts/:id", forum.getPost);
+    app.delete("/api/forum/posts/:id", requireAuth, forum.deletePost);
+    console.log("Mounted forum routes");
+  } catch (err) {
+    console.error("Error mounting routes:", err);
+  }
 
   return app;
 }

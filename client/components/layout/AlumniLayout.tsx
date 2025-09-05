@@ -39,7 +39,7 @@ import { ReactNode } from "react";
 import AIChatbot from "@/components/ai/AIChatbot";
 
 const navItems = [
-  { label: "Dashboard", icon: LayoutDashboard, to: "/" },
+  { label: "Dashboard", icon: LayoutDashboard, to: "/dashboard" },
   { label: "Alumni Directory", icon: Users, to: "/directory" },
   { label: "Events", icon: Calendar, to: "/events" },
   { label: "Forum/Chat", icon: MessageSquare, to: "/forum" },

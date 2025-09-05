@@ -25,6 +25,10 @@ const App = () => (
         <Routes>
           <Route element={<AlumniLayout />}>
             <Route index element={<Index />} />
+            <Route path="directory" element={<Directory />} />
+            <Route path="events" element={<Events />} />
+            <Route path="forum" element={<Forum />} />
+            <Route path="settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

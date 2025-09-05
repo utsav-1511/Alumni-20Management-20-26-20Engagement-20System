@@ -43,4 +43,4 @@ const container = document.getElementById("root")!;
 if (!(window as any).__REACT_ROOT__) {
   (window as any).__REACT_ROOT__ = createRoot(container);
 }
-;(window as any).__REACT_ROOT__.render(<App />);
+(window as any).__REACT_ROOT__.render(<App />);

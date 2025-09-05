@@ -47,6 +47,22 @@ model Post {
   createdAt DateTime @default(now())
 }
 
+model ChatRoom {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  messages  Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  sender    String
+  roomId    String
+  room      ChatRoom @relation(fields: [roomId], references: [id])
+  createdAt DateTime @default(now())
+}
+
 enum Role {
   ALUMNI
   STUDENT

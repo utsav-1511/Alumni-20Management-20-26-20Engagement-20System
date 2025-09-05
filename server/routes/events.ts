@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { prisma } from "@/prisma";
+import { prisma } from "../prisma";
 
 export const listEvents: RequestHandler = async (req, res) => {
   const all = await prisma.event.findMany({ orderBy: { createdAt: "desc" } });

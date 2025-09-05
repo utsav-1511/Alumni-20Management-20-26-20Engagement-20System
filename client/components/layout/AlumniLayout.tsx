@@ -39,10 +39,10 @@ import { ReactNode } from "react";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/" },
-  { label: "Alumni Directory", icon: Users, to: "/" },
-  { label: "Events", icon: Calendar, to: "/" },
-  { label: "Forum/Chat", icon: MessageSquare, to: "/" },
-  { label: "Settings", icon: Settings, to: "/" },
+  { label: "Alumni Directory", icon: Users, to: "/directory" },
+  { label: "Events", icon: Calendar, to: "/events" },
+  { label: "Forum/Chat", icon: MessageSquare, to: "/forum" },
+  { label: "Settings", icon: Settings, to: "/settings" },
 ];
 
 function Topbar() {

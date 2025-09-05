@@ -25,7 +25,11 @@ export async function createServer() {
     app.post("/api/auth/register", register);
     app.post("/api/auth/login", login);
     app.post("/api/auth/logout", logout);
-    console.log("Mounted auth routes: /api/auth/(register|login|logout)");
+    app.get("/api/auth/me", requireAuth, (req:any, res)=>{
+      // return basic user info
+      res.json({ userId: req.userId, role: req.role });
+    });
+    console.log("Mounted auth routes: /api/auth/(register|login|logout|me)");
 
     // Protected routes
     const { requireAuth } = await import("./middleware/auth");

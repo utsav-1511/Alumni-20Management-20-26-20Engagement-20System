@@ -64,6 +64,11 @@ export async function createServer() {
     app.post("/api/chat/rooms/:id/messages", requireAuth, chat.postMessage);
     app.get("/api/chat/rooms/:id/subscribe", chat.subscribe);
     console.log("Mounted chat routes");
+
+    // AI
+    const ai = await import("./routes/ai");
+    app.post("/api/ai/chat", ai.chat);
+    console.log("Mounted AI routes: /api/ai/chat");
   } catch (err) {
     console.error("Error mounting routes:", err);
     const msg =

@@ -11,6 +11,8 @@ import Directory from "./pages/Directory";
 import Events from "./pages/Events";
 import Forum from "./pages/Forum";
 import Settings from "./pages/Settings";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import NotFound from "./pages/NotFound";
 import AlumniLayout from "@/components/layout/AlumniLayout";
 

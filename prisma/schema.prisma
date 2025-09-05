@@ -1,0 +1,54 @@
+// Prisma schema — default to SQLite for local dev. To use Postgres (Neon), update the datasource provider and DATABASE_URL in .env
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(ALUMNI)
+  createdAt DateTime @default(now())
+  alumni    Alumni?  @relation(fields: [alumniId], references: [id])
+  alumniId  String?
+}
+
+model Alumni {
+  id       String   @id @default(cuid())
+  name     String
+  avatar   String?
+  batch    String?
+  company  String?
+  role     String?
+  createdAt DateTime @default(now())
+  user      User?    @relation
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  title     String
+  date      String
+  location  String?
+  cover     String?
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  author    String
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  ALUMNI
+  STUDENT
+  ADMIN
+}

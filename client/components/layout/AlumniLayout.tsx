@@ -47,6 +47,7 @@ const navItems = [
 ];
 
 function Topbar() {
+  const navigate = useNavigate();
   return (
     <div className="sticky top-0 z-20 flex items-center justify-between gap-4 border-b bg-white/90 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/60">
       <div className="flex items-center gap-3">
@@ -82,10 +83,10 @@ function Topbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate('/settings')}>Profile</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate('/settings')}>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sign out</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate('/logout')}>Sign out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -82,10 +82,16 @@ function Topbar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuItem onSelect={() => navigate('/settings')}>Profile</DropdownMenuItem>
-            <DropdownMenuItem onSelect={() => navigate('/settings')}>Settings</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate("/settings")}>
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate("/settings")}>
+              Settings
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={() => navigate('/logout')}>Sign out</DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => navigate("/logout")}>
+              Sign out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -145,7 +151,12 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
               Tip: Press ⌘/Ctrl + B to toggle the sidebar
             </div>
             <div className="flex items-center justify-between">
-              <Link to="/logout" className="text-sm text-primary hover:underline">Sign out</Link>
+              <Link
+                to="/logout"
+                className="text-sm text-primary hover:underline"
+              >
+                Sign out
+              </Link>
               <div className="text-xs text-muted-foreground">v1.0</div>
             </div>
           </div>

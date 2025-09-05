@@ -163,6 +163,7 @@ export default function Login() {
                     type="button"
                     variant="outline"
                     className="border-2 border-accent text-accent"
+                    onClick={handleSignup}
                   >
                     Sign Up
                   </Button>

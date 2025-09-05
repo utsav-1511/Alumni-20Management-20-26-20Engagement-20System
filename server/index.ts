@@ -25,7 +25,7 @@ export async function createServer() {
     app.post("/api/auth/register", register);
     app.post("/api/auth/login", login);
     app.post("/api/auth/logout", logout);
-    app.get("/api/auth/me", requireAuth, (req:any, res)=>{
+    app.get("/api/auth/me", requireAuth, (req: any, res) => {
       // return basic user info
       res.json({ userId: req.userId, role: req.role });
     });

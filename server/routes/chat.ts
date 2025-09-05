@@ -5,7 +5,9 @@ import { prisma } from "../prisma";
 const subscribers: Record<string, Set<any>> = {};
 
 export const listRooms: RequestHandler = async (req, res) => {
-  const rooms = await prisma.chatRoom.findMany({ orderBy: { createdAt: 'desc' } });
+  const rooms = await prisma.chatRoom.findMany({
+    orderBy: { createdAt: "desc" },
+  });
   res.json(rooms);
 };
 
@@ -17,7 +19,10 @@ export const createRoom: RequestHandler = async (req, res) => {
 
 export const listMessages: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  const msgs = await prisma.message.findMany({ where: { roomId: id }, orderBy: { createdAt: 'asc' } });
+  const msgs = await prisma.message.findMany({
+    where: { roomId: id },
+    orderBy: { createdAt: "asc" },
+  });
   res.json(msgs);
 };
 
@@ -25,8 +30,10 @@ export const postMessage: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params; // room id
     const { content, sender } = req.body;
-    if (!content) return res.status(400).json({ error: 'Missing content' });
-    const m = await prisma.message.create({ data: { content, sender: sender || 'Anonymous', roomId: id } });
+    if (!content) return res.status(400).json({ error: "Missing content" });
+    const m = await prisma.message.create({
+      data: { content, sender: sender || "Anonymous", roomId: id },
+    });
 
     // Broadcast to SSE subscribers
     const set = subscribers[id];
@@ -44,16 +51,16 @@ export const postMessage: RequestHandler = async (req, res) => {
     res.json(m);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
 export const subscribe: RequestHandler = async (req, res) => {
   const { id } = req.params; // room id
   res.set({
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache',
-    Connection: 'keep-alive',
+    "Content-Type": "text/event-stream",
+    "Cache-Control": "no-cache",
+    Connection: "keep-alive",
   });
   res.flushHeaders?.();
 
@@ -61,9 +68,9 @@ export const subscribe: RequestHandler = async (req, res) => {
   subscribers[id].add(res);
 
   // When client connects, send a comment
-  res.write(': connected\n\n');
+  res.write(": connected\n\n");
 
-  req.on('close', () => {
+  req.on("close", () => {
     subscribers[id].delete(res);
   });
 };

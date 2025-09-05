@@ -4,7 +4,9 @@ export const chat: RequestHandler = async (req, res) => {
   try {
     const apiKey = process.env.GOOGLE_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: "GOOGLE_API_KEY not configured on server" });
+      return res
+        .status(500)
+        .json({ error: "GOOGLE_API_KEY not configured on server" });
     }
 
     const { message } = req.body;
@@ -32,28 +34,28 @@ export const chat: RequestHandler = async (req, res) => {
 
     if (!r.ok) {
       const txt = await r.text();
-      console.error('Google API error', r.status, txt);
-      return res.status(502).json({ error: 'Google API error', details: txt });
+      console.error("Google API error", r.status, txt);
+      return res.status(502).json({ error: "Google API error", details: txt });
     }
 
     const data = await r.json();
 
     // The response shape may vary; try to extract text content safely.
     // For text-bison generateText, the result is available at data.candidates[0].output
-    let reply = '';
+    let reply = "";
     try {
       if (data?.candidates && data.candidates.length > 0) {
-        reply = data.candidates[0].output || '';
+        reply = data.candidates[0].output || "";
       } else if (data?.results && data.results.length > 0) {
         // other response shape
-        reply = data.results.map((r: any) => r.output).join('\n') || '';
-      } else if (typeof data?.output === 'string') {
+        reply = data.results.map((r: any) => r.output).join("\n") || "";
+      } else if (typeof data?.output === "string") {
         reply = data.output;
       } else {
         reply = JSON.stringify(data);
       }
     } catch (e) {
-      console.error('Failed to parse Google response', e, data);
+      console.error("Failed to parse Google response", e, data);
       reply = JSON.stringify(data);
     }
 

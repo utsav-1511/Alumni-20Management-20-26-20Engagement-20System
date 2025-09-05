@@ -60,16 +60,20 @@ export const logout: RequestHandler = async (req, res) => {
 export const me: RequestHandler = async (req: any, res) => {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader) return res.status(401).json({ error: 'Missing auth' });
-    const parts = authHeader.split(' ');
-    if (parts.length !== 2 || parts[0] !== 'Bearer') return res.status(401).json({ error: 'Invalid auth format' });
+    if (!authHeader) return res.status(401).json({ error: "Missing auth" });
+    const parts = authHeader.split(" ");
+    if (parts.length !== 2 || parts[0] !== "Bearer")
+      return res.status(401).json({ error: "Invalid auth format" });
     const token = parts[1];
     const payload: any = jwt.verify(token, JWT_SECRET);
-    const user = await prisma.user.findUnique({ where: { id: payload.userId }, select: { id: true, email: true, role: true } });
-    if (!user) return res.status(404).json({ error: 'User not found' });
+    const user = await prisma.user.findUnique({
+      where: { id: payload.userId },
+      select: { id: true, email: true, role: true },
+    });
+    if (!user) return res.status(404).json({ error: "User not found" });
     res.json({ user });
   } catch (err) {
     console.error(err);
-    res.status(401).json({ error: 'Invalid token' });
+    res.status(401).json({ error: "Invalid token" });
   }
 };

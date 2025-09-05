@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       setAuthed(false);
       setLoading(false);
@@ -17,26 +17,31 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
 
     (async () => {
       try {
-        const res = await fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await fetch("/api/auth/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!mounted) return;
         if (res.ok) {
           setAuthed(true);
         } else {
           setAuthed(false);
-          localStorage.removeItem('token');
+          localStorage.removeItem("token");
         }
       } catch (e) {
         setAuthed(false);
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
       } finally {
         if (mounted) setLoading(false);
       }
     })();
 
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   if (loading) return null;
-  if (!authed) return <Navigate to="/" state={{ from: location.pathname }} replace />;
+  if (!authed)
+    return <Navigate to="/" state={{ from: location.pathname }} replace />;
   return <>{children}</>;
 }

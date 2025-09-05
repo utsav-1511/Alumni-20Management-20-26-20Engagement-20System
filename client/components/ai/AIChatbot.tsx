@@ -3,7 +3,9 @@ import { MessageCircle, X } from "lucide-react";
 
 export default function AIChatbot() {
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<{ from: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<{ from: string; text: string }[]>(
+    [],
+  );
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const boxRef = useRef<HTMLDivElement | null>(null);
@@ -11,31 +13,34 @@ export default function AIChatbot() {
   useEffect(() => {
     if (!open) return;
     // focus input when opened
-    const el = boxRef.current?.querySelector('textarea');
+    const el = boxRef.current?.querySelector("textarea");
     (el as HTMLTextAreaElement | null)?.focus();
   }, [open]);
 
   const send = async () => {
     if (!input.trim()) return;
     const userMsg = input.trim();
-    setMessages((m) => [...m, { from: 'user', text: userMsg }]);
-    setInput('');
+    setMessages((m) => [...m, { from: "user", text: userMsg }]);
+    setInput("");
     setLoading(true);
     try {
-      const res = await fetch('/api/ai/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg }),
       });
       const data = await res.json();
       if (!res.ok) {
-        const err = data?.error || data?.details || 'AI error';
-        setMessages((m) => [...m, { from: 'ai', text: `Error: ${err}` }]);
+        const err = data?.error || data?.details || "AI error";
+        setMessages((m) => [...m, { from: "ai", text: `Error: ${err}` }]);
       } else {
-        setMessages((m) => [...m, { from: 'ai', text: data.reply || 'No reply' }]);
+        setMessages((m) => [
+          ...m,
+          { from: "ai", text: data.reply || "No reply" },
+        ]);
       }
     } catch (e) {
-      setMessages((m) => [...m, { from: 'ai', text: 'Network error' }]);
+      setMessages((m) => [...m, { from: "ai", text: "Network error" }]);
     } finally {
       setLoading(false);
     }
@@ -50,29 +55,55 @@ export default function AIChatbot() {
           onClick={() => setOpen((s) => !s)}
           aria-label="Open AI chat"
         >
-          {open ? <X className="h-5 w-5" /> : <MessageCircle className="h-5 w-5" />}
+          {open ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <MessageCircle className="h-5 w-5" />
+          )}
         </button>
       </div>
 
       {/* Chat panel */}
       {open && (
         <div className="fixed bottom-20 right-6 z-50 w-80 md:w-96">
-          <div ref={boxRef} className="rounded-lg bg-white shadow-lg ring-1 ring-black/5">
+          <div
+            ref={boxRef}
+            className="rounded-lg bg-white shadow-lg ring-1 ring-black/5"
+          >
             <div className="flex items-center justify-between border-b px-4 py-2">
               <div className="font-semibold">AI Assistant</div>
               <div className="text-xs text-muted-foreground">Gemini</div>
             </div>
             <div className="p-3 h-64 overflow-auto space-y-2">
-              {messages.length === 0 && <div className="text-sm text-muted-foreground">Ask me anything about alumni, events, or careers.</div>}
+              {messages.length === 0 && (
+                <div className="text-sm text-muted-foreground">
+                  Ask me anything about alumni, events, or careers.
+                </div>
+              )}
               {messages.map((m, i) => (
-                <div key={i} className={`rounded-md p-2 ${m.from === 'user' ? 'bg-primary/10 self-end' : 'bg-slate-100'}`}>
+                <div
+                  key={i}
+                  className={`rounded-md p-2 ${m.from === "user" ? "bg-primary/10 self-end" : "bg-slate-100"}`}
+                >
                   <div className="text-sm">{m.text}</div>
                 </div>
               ))}
             </div>
             <div className="flex gap-2 border-t p-3">
-              <textarea value={input} onChange={(e)=>setInput(e.target.value)} rows={1} className="flex-1 resize-none rounded-md border px-2 py-1 text-sm" placeholder="Ask AI..." />
-              <button onClick={send} className="rounded-md bg-primary px-3 py-1 text-white" disabled={loading}>{loading? '...' : 'Send'}</button>
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                rows={1}
+                className="flex-1 resize-none rounded-md border px-2 py-1 text-sm"
+                placeholder="Ask AI..."
+              />
+              <button
+                onClick={send}
+                className="rounded-md bg-primary px-3 py-1 text-white"
+                disabled={loading}
+              >
+                {loading ? "..." : "Send"}
+              </button>
             </div>
           </div>
         </div>

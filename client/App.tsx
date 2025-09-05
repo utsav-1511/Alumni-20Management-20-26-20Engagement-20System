@@ -7,6 +7,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Directory from "./pages/Directory";
+import Events from "./pages/Events";
+import Forum from "./pages/Forum";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import AlumniLayout from "@/components/layout/AlumniLayout";
 

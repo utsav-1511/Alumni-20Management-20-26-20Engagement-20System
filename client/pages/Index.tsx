@@ -8,11 +8,41 @@ import { Card } from "@/components/ui/card";
 export default function Index() {
   const alumniData: AlumniItem[] = useMemo(
     () => [
-      { id: "1", name: "David Russom", avatar: "https://i.pravatar.cc/120?img=12", batch: "2016", company: "Web Designer, Bloom" },
-      { id: "2", name: "Albert Flores", avatar: "https://i.pravatar.cc/120?img=3", batch: "2018", company: "Marketing Coordinator, Hooli" },
-      { id: "3", name: "Marvin McKinney", avatar: "https://i.pravatar.cc/120?img=5", batch: "2015", company: "Data Engineer, Initech" },
-      { id: "4", name: "Theresa Webb", avatar: "https://i.pravatar.cc/120?img=8", batch: "2017", company: "Nurse, Mercy" },
-      { id: "5", name: "Ronald Richards", avatar: "https://i.pravatar.cc/120?img=15", batch: "2013", company: "President of Sales, Globex" },
+      {
+        id: "1",
+        name: "David Russom",
+        avatar: "https://i.pravatar.cc/120?img=12",
+        batch: "2016",
+        company: "Web Designer, Bloom",
+      },
+      {
+        id: "2",
+        name: "Albert Flores",
+        avatar: "https://i.pravatar.cc/120?img=3",
+        batch: "2018",
+        company: "Marketing Coordinator, Hooli",
+      },
+      {
+        id: "3",
+        name: "Marvin McKinney",
+        avatar: "https://i.pravatar.cc/120?img=5",
+        batch: "2015",
+        company: "Data Engineer, Initech",
+      },
+      {
+        id: "4",
+        name: "Theresa Webb",
+        avatar: "https://i.pravatar.cc/120?img=8",
+        batch: "2017",
+        company: "Nurse, Mercy",
+      },
+      {
+        id: "5",
+        name: "Ronald Richards",
+        avatar: "https://i.pravatar.cc/120?img=15",
+        batch: "2013",
+        company: "President of Sales, Globex",
+      },
     ],
     [],
   );
@@ -24,21 +54,24 @@ export default function Index() {
         title: "Annual Alumni Meetup",
         date: "Sat, Oct 12 • 5:00 PM",
         location: "Main Auditorium",
-        cover: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
+        cover:
+          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
       },
       {
         id: "e2",
         title: "Tech Talk: AI in 2025",
         date: "Fri, Nov 08 • 4:00 PM",
         location: "Auditorium B",
-        cover: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
+        cover:
+          "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
       },
       {
         id: "e3",
         title: "Career Fair & Networking",
         date: "Thu, Dec 05 • 10:00 AM",
         location: "Expo Hall",
-        cover: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1200&auto=format&fit=crop",
+        cover:
+          "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1200&auto=format&fit=crop",
       },
     ],
     [],

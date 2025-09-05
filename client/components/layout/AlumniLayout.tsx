@@ -43,7 +43,9 @@ function Topbar() {
         <span className="text-lg font-semibold text-primary">Alumni Hub</span>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="outline" className="hidden sm:inline-flex">Invite</Button>
+        <Button variant="outline" className="hidden sm:inline-flex">
+          Invite
+        </Button>
         <Avatar className="h-8 w-8">
           <AvatarImage src="https://i.pravatar.cc/64" alt="User" />
           <AvatarFallback>UK</AvatarFallback>
@@ -60,21 +62,30 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
       <Sidebar className="border-r">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-white font-bold">A</div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-white font-bold">
+              A
+            </div>
             <div>
               <div className="text-sm font-semibold">Alumni Hub</div>
-              <div className="text-xs text-muted-foreground">CSE Association</div>
+              <div className="text-xs text-muted-foreground">
+                CSE Association
+              </div>
             </div>
           </div>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground">Navigation</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-xs uppercase tracking-wide text-muted-foreground">
+              Navigation
+            </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {navItems.map(({ label, icon: Icon, to }) => (
                   <SidebarMenuItem key={label}>
-                    <SidebarMenuButton asChild isActive={location.pathname === to}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={location.pathname === to}
+                    >
                       <Link to={to} className="flex items-center gap-2">
                         <Icon className="text-primary" />
                         <span>{label}</span>
@@ -96,7 +107,9 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
 
       <SidebarInset className="bg-slate-50">
         <Topbar />
-        <div className={cn("mx-auto w-full max-w-7xl p-4 md:p-6")}>{children ?? <Outlet />}</div>
+        <div className={cn("mx-auto w-full max-w-7xl p-4 md:p-6")}>
+          {children ?? <Outlet />}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

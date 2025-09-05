@@ -57,6 +57,23 @@ export async function createServer() {
     console.log("Mounted forum routes");
   } catch (err) {
     console.error("Error mounting routes:", err);
+    const msg = (err && (err as any).message) || "Internal server error while mounting routes";
+
+    // Fallback auth endpoints
+    app.post("/api/auth/register", (_req, res) => {
+      res.status(500).json({ error: `Auth routes unavailable: ${msg}` });
+    });
+    app.post("/api/auth/login", (_req, res) => {
+      res.status(500).json({ error: `Auth routes unavailable: ${msg}` });
+    });
+    app.post("/api/auth/logout", (_req, res) => {
+      res.status(500).json({ error: `Auth routes unavailable: ${msg}` });
+    });
+
+    // Fallback public endpoints
+    app.get("/api/alumni", (_req, res) => res.status(500).json({ error: `Alumni routes unavailable: ${msg}` }));
+    app.get("/api/events", (_req, res) => res.status(500).json({ error: `Events routes unavailable: ${msg}` }));
+    app.get("/api/forum/posts", (_req, res) => res.status(500).json({ error: `Forum routes unavailable: ${msg}` }));
   }
 
   return app;

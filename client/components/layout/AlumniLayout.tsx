@@ -141,8 +141,14 @@ export default function AlumniLayout({ children }: { children?: ReactNode }) {
         </SidebarContent>
         <SidebarSeparator />
         <SidebarFooter>
-          <div className="rounded-md bg-muted/50 p-3 text-xs text-muted-foreground">
-            Tip: Press ⌘/Ctrl + B to toggle the sidebar
+          <div className="flex w-full flex-col gap-2 p-3">
+            <div className="rounded-md bg-muted/50 p-2 text-xs text-muted-foreground">
+              Tip: Press ⌘/Ctrl + B to toggle the sidebar
+            </div>
+            <div className="flex items-center justify-between">
+              <Link to="/logout" className="text-sm text-primary hover:underline">Sign out</Link>
+              <div className="text-xs text-muted-foreground">v1.0</div>
+            </div>
           </div>
         </SidebarFooter>
       </Sidebar>

@@ -9,21 +9,21 @@ export default function Directory() {
     () => [
       {
         id: "1",
-        name: "David Russom",
-        avatar: "https://i.pravatar.cc/120?img=12",
+        name: "Aditya Tiwari",
+        avatar: "https://media.licdn.com/dms/image/v2/D5603AQENqe9wlcNCRg/profile-displayphoto-crop_800_800/B56ZjgqRy3H8AI-/0/1756115838566?e=1759968000&v=beta&t=fRfAmi7le13x6vQ2QVvNalYQJqCnI1e2IT3vPjOUa_E",
         batch: "2016",
         company: "Bloom",
       },
       {
         id: "2",
-        name: "Albert Flores",
+        name: "Aman",
         avatar: "https://i.pravatar.cc/120?img=3",
         batch: "2018",
         company: "Hooli",
       },
       {
         id: "3",
-        name: "Marvin McKinney",
+        name: "Akhilesh Pal",
         avatar: "https://i.pravatar.cc/120?img=5",
         batch: "2015",
         company: "Initech",

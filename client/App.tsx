@@ -17,6 +17,9 @@ import Logout from "./pages/Logout";
 import NotFound from "./pages/NotFound";
 import AlumniLayout from "@/components/layout/AlumniLayout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Profile from "./pages/Profile";
+import OtherProfile from './pages/OtherProfiles';
+
 
 const queryClient = new QueryClient();
 
@@ -42,6 +45,10 @@ const App = () => (
             <Route path="directory" element={<Directory />} />
             <Route path="events" element={<Events />} />
             <Route path="forum" element={<Forum />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="/profile/:name" element={<OtherProfile />} />
+
+
             <Route path="settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -12,42 +12,44 @@ export const chat: RequestHandler = async (req, res) => {
     const { message } = req.body;
     if (!message) return res.status(400).json({ error: "Missing message" });
 
-    // Call Google Generative AI REST endpoint (Text Bison / Gemini family).
-    // NOTE: Update model name if you want a specific Gemini variant. This uses the v1beta2 generateText endpoint.
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=${apiKey}`;
+    // Correct model name for Gemini Text Bison (v1beta2)
+    const modelName = "models/text-bison-001:generateText";
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta2/${modelName}?key=${apiKey}`;
 
+    // Gemini expects the prompt to be an object with a "text" property
     const payload = {
       prompt: {
         text: message,
       },
-      // You can tweak temperature, max output tokens, safety settings here if supported.
-      // These fields depend on the GenAI endpoint; adjust as needed for specific model.
+      // Optional parameters
+      temperature: 0.7,
+      maxOutputTokens: 1024,
+      // Add safety settings if desired
     };
 
-    const r = await fetch(endpoint, {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // If using OAuth tokens instead of API key, add Authorization header here:
+        // Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify(payload),
     });
 
-    if (!r.ok) {
-      const txt = await r.text();
-      console.error("Google API error", r.status, txt);
-      return res.status(502).json({ error: "Google API error", details: txt });
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Google API error", response.status, errorText);
+      return res.status(502).json({ error: "Google API error", details: errorText });
     }
 
-    const data = await r.json();
+    const data = await response.json();
 
-    // The response shape may vary; try to extract text content safely.
-    // For text-bison generateText, the result is available at data.candidates[0].output
     let reply = "";
     try {
       if (data?.candidates && data.candidates.length > 0) {
         reply = data.candidates[0].output || "";
       } else if (data?.results && data.results.length > 0) {
-        // other response shape
         reply = data.results.map((r: any) => r.output).join("\n") || "";
       } else if (typeof data?.output === "string") {
         reply = data.output;

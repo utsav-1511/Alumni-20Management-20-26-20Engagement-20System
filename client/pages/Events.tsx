@@ -10,15 +10,39 @@ export default function Events() {
         id: "e1",
         title: "Annual Alumni Meetup",
         date: "Sat, Oct 12 • 5:00 PM",
-        location: "Main Auditorium",
+        location: "New Delhi",
         cover:
-          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
+          "https://plus.unsplash.com/premium_photo-1673240845240-2fce9077a6e9?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
         id: "e2",
+        title: "Tech Talk: LLM",
+        date: "Fri, Nov 08 • 4:00 PM",
+        location: "Mumbai",
+        cover:
+          "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        id: "e3",
         title: "Tech Talk: AI in 2025",
         date: "Fri, Nov 08 • 4:00 PM",
-        location: "Auditorium B",
+        location: "Noida",
+        cover:
+          "https://images.unsplash.com/photo-1649257680750-c0654b665c6f?q=80&w=1299&auto=format&fit=crop",
+      },
+      {
+        id: "e4",
+        title: "Tech Talk: Web Technology",
+        date: "Fri, Nov 08 • 4:00 PM",
+        location: "Jaipur",
+        cover:
+          "https://images.unsplash.com/photo-1695395550316-8995ae9d35ff?q=80&w=1500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      },
+      {
+        id: "e5",
+        title: "Tech Talk: BlockChain",
+        date: "Fri, Nov 08 • 4:00 PM",
+        location: "Mumbai",
         cover:
           "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
       },

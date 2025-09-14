@@ -1,4 +1,5 @@
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+
 import {
   Sidebar,
   SidebarContent,
@@ -76,14 +77,14 @@ function Topbar() {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-md">
               <Avatar className="h-8 w-8">
-                <AvatarImage src="https://i.pravatar.cc/64" alt="User" />
+                <AvatarImage src="" alt="User" />
                 <AvatarFallback>UK</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuItem onSelect={() => navigate("/settings")}>
+            <DropdownMenuItem onSelect={() => navigate("/profile")}>
               Profile
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => navigate("/settings")}>

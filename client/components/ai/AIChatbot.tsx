@@ -9,6 +9,21 @@ export default function AIChatbot() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const boxRef = useRef<HTMLDivElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [input]);
 
   useEffect(() => {
     if (!open) return;
@@ -75,11 +90,6 @@ export default function AIChatbot() {
               <div className="text-xs text-muted-foreground">Gemini</div>
             </div>
             <div className="p-3 h-64 overflow-auto space-y-2">
-              {messages.length === 0 && (
-                <div className="text-sm text-muted-foreground">
-                  Ask me anything about alumni, events, or careers.
-                </div>
-              )}
               {messages.map((m, i) => (
                 <div
                   key={i}

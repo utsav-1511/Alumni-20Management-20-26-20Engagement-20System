@@ -28,6 +28,7 @@ import {
   Users,
   Search,
 } from "lucide-react";
+import { AlignEndHorizontal } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -44,6 +45,7 @@ const navItems = [
   { label: "Alumni Directory", icon: Users, to: "/directory" },
   { label: "Events", icon: Calendar, to: "/events" },
   { label: "Forum/Chat", icon: MessageSquare, to: "/forum" },
+  { label: "Leaderboard", icon: AlignEndHorizontal, to: "/leaderboard" },
   { label: "Settings", icon: Settings, to: "/settings" },
 ];
 
@@ -55,12 +57,12 @@ function Topbar() {
         <SidebarTrigger className="md:hidden" />
         <div>
           <div className="text-lg font-semibold text-primary">Alumni Hub</div>
-          <div className="text-xs text-muted-foreground">Admin Dashboard</div>
+
         </div>
       </div>
 
       <div className="flex flex-1 items-center justify-center">
-        <h1 className="text-lg font-semibold text-slate-800">Dashboard</h1>
+        {/* <h1 className="text-lg font-semibold text-slate-800">Dashboard</h1> */}
       </div>
 
       <div className="flex items-center gap-3">

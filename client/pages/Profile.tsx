@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,14 +6,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Camera, Check, Edit, Link as LinkIcon, Mail, Plus, UserPlus, Users } from "lucide-react";
+import { Camera, Check, Edit, Link as LinkIcon, Mail, Plus, UserPlus, Users, GraduationCap, Lock } from "lucide-react";
 
 interface Post { id: number; title: string; description: string; imageUrl?: string }
 interface Person { name: string; headline?: string; avatar?: string; profileUrl?: string }
 
-const initialMe = {
+
+interface Me {
+  name: string;
+  designation: string;
+  batch: string;
+  bio: string;
+  cover: string;
+  avatar: string;
+  college: string;
+  degree: string;
+  skills: string[];
+  contact: {
+    email: string;
+    website: string;
+  };
+  posts: Post[];
+  followers: Person[];
+  following: Person[];
+  additionalAbout?: string;
+  education: {
+    college: string;
+    batch: string;
+    degree: string;
+  };
+}
+const initialMe: Me = {
   name: "Utsav Kushwaha",
   designation: "Software Engineer",
   batch: "2027",
@@ -23,6 +47,8 @@ const initialMe = {
     "https://images.unsplash.com/photo-1520975682031-ae4ce7d2439b?q=80&w=1600&auto=format&fit=crop",
   avatar:
     "https://media.licdn.com/dms/image/v2/D5603AQEIVSCXlRcjCA/profile-displayphoto-scale_400_400/B56ZkUTd_FIAAg-/0/1756982274618?e=1759968000&v=beta&t=T7UUy-KWkcCBPxtr_Q5kj9Q1jDYEe09TU9Q4qRV6d6Q",
+  college: "IIT Delhi",
+  degree: "B.Tech in Computer Science",
   skills: ["Front End", "Blockchain", "WebDev"],
   contact: {
     email: "utsav@gmail.com",
@@ -45,20 +71,26 @@ const initialMe = {
       imageUrl:
         "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop",
     },
-  ] as Post[],
+  ],
   followers: [
     { name: "Aditya", headline: "SWE • FinTech" },
     { name: "Aman", headline: "Product @ Startup" },
     { name: "Anisha", headline: "Data Scientist" },
     { name: "Diksha", headline: "UI/UX Designer" },
-  ] as Person[],
+  ],
   following: [
     { name: "Siddharth", headline: "Full‑stack Dev" },
     { name: "Riya", headline: "Security Engineer" },
     { name: "Karan", headline: "DevOps" },
     { name: "Priya", headline: "Mobile Dev" },
     { name: "Mohit", headline: "ML Engineer" },
-  ] as Person[],
+  ],
+  additionalAbout: "",
+  education: {
+    college: "IIT Delhi",
+    batch: "2027",
+    degree: "B.Tech",
+  },
 };
 
 export default function MyProfile() {
@@ -68,6 +100,7 @@ export default function MyProfile() {
   const [newSkill, setNewSkill] = useState("");
   const [showAllFollowers, setShowAllFollowers] = useState(false);
   const [showAllFollowing, setShowAllFollowing] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   const followers = useMemo(
     () => (showAllFollowers ? draft.followers : draft.followers.slice(0, 6)),
@@ -112,6 +145,17 @@ export default function MyProfile() {
     setDraft(me);
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape' && selectedPost) {
+        setSelectedPost(null);
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPost]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
@@ -160,11 +204,31 @@ export default function MyProfile() {
                     <Label htmlFor="batch">Batch</Label>
                     <Input id="batch" value={draft.batch} onChange={(e) => setDraft({ ...draft, batch: e.target.value })} />
                   </div>
+                  <div>
+                    <Label htmlFor="college">College</Label>
+                    <Input
+                      id="college"
+                      value={draft.college}
+                      disabled
+                      className="bg-muted"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="degree">Degree</Label>
+                    <Input
+                      id="degree"
+                      value={draft.degree}
+                      disabled
+                      className="bg-muted"
+                    />
+                  </div>
                 </div>
               ) : (
                 <>
                   <h1 className="text-xl font-bold md:text-2xl">{me.name}</h1>
-                  <div className="mt-1 text-sm text-muted-foreground">{me.designation} • Batch {me.batch}</div>
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    {me.designation} • {me.college} • Batch {me.batch}
+                  </div>
                 </>
               )}
             </div>
@@ -185,73 +249,134 @@ export default function MyProfile() {
           </div>
         </div>
 
+        {/* Stats */}
+        <div className="stats mt-14 grid grid-cols-2 gap-5 sm:grid-cols-3">
+          <div className="stat rounded-xl bg-white p-6 shadow-card flex flex-col items-center">
+            <div className="stat-title text-sm text-muted-foreground mb-2">Connections</div>
+            <div className="stat-value text-2xl font-bold text-primary">{draft.followers.length + draft.following.length}</div>
+          </div>
+          <div className="stat rounded-xl bg-white p-6 shadow-card flex flex-col items-center">
+            <div className="stat-title text-sm text-muted-foreground mb-2">Posts</div>
+            <div className="stat-value text-2xl font-bold text-primary">{draft.posts.length}</div>
+          </div>
+           <div className="stat rounded-xl bg-white p-6 shadow-card flex flex-col items-center">
+            <div className="stat-title text-sm text-muted-foreground mb-2">Followers</div>
+            <div className="stat-value text-2xl font-bold text-primary">{draft.followers.length}</div>
+          </div>
+        </div>
+
         {/* Main grid */}
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Left column */}
           <div className="space-y-6 lg:col-span-2">
             <Card>
-              <CardHeader>
+                <CardHeader>
                 <CardTitle>About</CardTitle>
                 {!isEditing && <CardDescription>{me.bio}</CardDescription>}
-              </CardHeader>
-              <CardContent>
+                </CardHeader>
+                <CardContent>
                 {isEditing ? (
                   <div>
-                    <Label htmlFor="bio">Bio</Label>
-                    <textarea
-                      id="bio"
-                      rows={4}
-                      className="mt-2 w-full resize-y rounded-md border border-input bg-background p-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      value={draft.bio}
-                      onChange={(e) => setDraft({ ...draft, bio: e.target.value })}
-                    />
+                  <Label htmlFor="bio">Bio</Label>
+                  <textarea
+                    id="bio"
+                    rows={4}
+                    className="mt-2 w-full resize-y rounded-md border border-input bg-background p-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    value={draft.bio}
+                    onChange={(e) => setDraft({ ...draft, bio: e.target.value })}
+                  />
                   </div>
                 ) : null}
                 <Separator className="my-6" />
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <a className="inline-flex items-center gap-2 text-sm text-primary hover:underline" href={`mailto:${me.contact.email}`}>
-                    <Mail className="h-4 w-4" /> {me.contact.email}
+                  <Mail className="h-4 w-4" /> {me.contact.email}
                   </a>
                   <a className="inline-flex items-center gap-2 text-sm text-primary hover:underline" href={me.contact.website} target="_blank" rel="noreferrer">
-                    <LinkIcon className="h-4 w-4" /> {me.contact.website.replace(/^https?:\/\//, "")}
+                  <LinkIcon className="h-4 w-4" /> {me.contact.website.replace(/^https?:\/\//, "")}
                   </a>
                 </div>
-              </CardContent>
+                {isEditing && (
+                  <div className="mt-6">
+                  <Label htmlFor="additional-about">Additional About</Label>
+                  <textarea
+                    id="additional-about"
+                    rows={3}
+                    className="mt-2 w-full resize-y rounded-md border border-input bg-background p-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    value={draft.additionalAbout || ""}
+                    onChange={(e) => setDraft({ ...draft, additionalAbout: e.target.value })}
+                    placeholder="Add more about yourself..."
+                  />
+                  </div>
+                )}
+                {!isEditing && draft.additionalAbout && (
+                  <div className="mt-6 text-sm text-muted-foreground">
+                  <strong>Additional About:</strong> {draft.additionalAbout}
+                  </div>
+                )}
+                {/* Added Education Section */}
+                <div className="mb-6">
+                  <h3 className="text-sm font-medium mb-2">Education</h3>
+                  <div className="text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <GraduationCap className="h-4 w-4" />
+                      <span>{me.college} • Batch of {me.batch}</span>
+                    </div>
+                  </div>
+                </div>
+                </CardContent>
             </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Posts</CardTitle>
-                <CardDescription>Your recent posts</CardDescription>
+              <CardTitle>Posts</CardTitle>
+              <CardDescription>Your recent posts</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {me.posts.map((post) => (
-                  <div key={post.id} className="flex gap-4 rounded-lg border p-4">
-                    <div className="h-20 w-28 flex-shrink-0 overflow-hidden rounded-md bg-slate-100">
-                      {post.imageUrl ? (
-                        <img src={post.imageUrl} alt="Post" className="h-full w-full object-cover" />
-                      ) : (
-                        <div className="grid h-full w-full place-items-center text-xs text-slate-400">No image</div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="font-medium">{post.title}</div>
-                      <div className="text-sm text-muted-foreground">{post.description}</div>
-                    </div>
+              <CardContent className="space-y-6">
+              {me.posts.map((post) => (
+                <div
+                  key={post.id}
+                  className="flex flex-col rounded-xl border bg-white shadow-card overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
+                  onClick={() => setSelectedPost(post)}
+                >
+                {post.imageUrl ? (
+                  <div className="w-full h-64 bg-slate-100">
+                  <img
+                    src={post.imageUrl}
+                    alt="Post"
+                    className="h-full w-full object-cover"
+                  />
                   </div>
-                ))}
-                {isEditing ? (
-                  <div className="rounded-lg border border-dashed p-4">
-                    <div className="mb-2 text-sm font-medium">Add new post</div>
-                    <NewPost
-                      onAdd={(p) => {
-                        setDraft({ ...draft, posts: [...draft.posts, p] });
-                        setMe({ ...me, posts: [...me.posts, p] });
-                        toast.success("Post added");
-                      }}
-                    />
-                  </div>
-                ) : null}
+                ) : (
+                  <div className="w-full h-64 grid place-items-center bg-slate-100 text-lg text-slate-400">No image</div>
+                )}
+                <div className="p-6">
+                  <div className="font-semibold text-lg mb-2">{post.title}</div>
+                  <div className="text-base text-muted-foreground">{post.description}</div>
+                </div>
+                </div>
+              ))}
+              
+              {/* Add the modal */}
+              {selectedPost && (
+                <PostModal
+                  post={selectedPost}
+                  onClose={() => setSelectedPost(null)}
+                />
+              )}
+
+              {isEditing ? (
+                <div className="rounded-xl border border-dashed p-6 bg-slate-50">
+                <div className="mb-2 text-base font-semibold">Add new post</div>
+                <NewPost
+                  onAdd={(p) => {
+                  setDraft({ ...draft, posts: [...draft.posts, p] });
+                  setMe({ ...me, posts: [...me.posts, p] });
+                  toast.success("Post added");
+                  }}
+                />
+                </div>
+              ) : null}
               </CardContent>
             </Card>
           </div>
@@ -390,6 +515,57 @@ function NewPost({ onAdd }: { onAdd: (p: Post) => void }) {
           <Plus className="h-4 w-4" /> Add post
         </Button>
       </div>
+    </div>
+  );
+}
+
+function PostModal({ post, onClose }: { post: Post; onClose: () => void }) {
+  return (
+    <div 
+      className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4
+  animate-in fade-in duration-200"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto
+  animate-in zoom-in-95 duration-200"
+        onClick={e => e.stopPropagation()}
+      >
+        {post.imageUrl ? (
+          <div className="w-full h-[60vh] bg-slate-100">
+            <img
+              src={post.imageUrl}
+              alt={post.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="w-full h-[60vh] grid place-items-center bg-slate-100 text-lg text-slate-400">
+            No image
+          </div>
+        )}
+        <div className="p-6">
+          <h2 className="text-2xl font-semibold mb-4">{post.title}</h2>
+          <p className="text-lg text-muted-foreground">{post.description}</p>
+        </div>
+        <div className="p-4 border-t bg-slate-50 flex justify-end">
+          <Button variant="secondary" onClick={onClose}>Close</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Add this component to show locked fields
+// Reusable component to display locked fields
+function LockedField({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="relative">
+        <Label>{label}</Label>
+        <div className="mt-1 flex items-center">
+          <Input value={value} disabled className="bg-muted pr-8" />
+          <Lock className="absolute right-2 h-4 w-4 text-muted-foreground" />
+        </div>
     </div>
   );
 }

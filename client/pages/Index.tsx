@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import SummaryWidget from "@/components/dashboard/SummaryWidget";
 import AlumniTable, { AlumniItem } from "@/components/dashboard/AlumniTable";
-import EventCard, { EventItem } from "@/components/dashboard/EventCard";
+import EventCard from "@/components/dashboard/EventCard";
+// Remove EventItem if not used or not exported from EventCard
 import { Users, CalendarDays, MessageSquare } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { eventsData } from "@/data/events";
 
 export default function Index() {
   const alumniData: AlumniItem[] = useMemo(
@@ -47,35 +49,7 @@ export default function Index() {
     [],
   );
 
-  const events: EventItem[] = useMemo(
-    () => [
-      {
-        id: "e1",
-        title: "Annual Alumni Meetup",
-        date: "Sat, Oct 12 • 5:00 PM",
-        location: "New Delhi Convention Center",
-        cover:
-          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
-      },
-      {
-        id: "e2",
-        title: "Tech Talk: AI in 2025",
-        date: "Fri, Nov 08 • 4:00 PM",
-        location: "Bangalore Auditorium",
-        cover:
-          "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1200&auto=format&fit=crop",
-      },
-      {
-        id: "e3",
-        title: "Career Fair & Networking",
-        date: "Thu, Dec 05 • 10:00 AM",
-        location: "Mumbai Expo Hall",
-        cover:
-          "https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=1200&auto=format&fit=crop",
-      },
-    ],
-    [],
-  );
+  const upcomingEvents = eventsData.slice(0, 3); // Show only first 3 events
 
   return (
     <div className="space-y-6">
@@ -89,7 +63,7 @@ export default function Index() {
         />
         <SummaryWidget
           title="Upcoming Events"
-          value={events.length}
+          value={upcomingEvents.length}
           icon={<CalendarDays className="h-5 w-5" />}
           accent="bg-accent/15 text-accent-foreground"
         />
@@ -111,8 +85,8 @@ export default function Index() {
             <h3 className="text-lg font-semibold">Upcoming Events</h3>
           </div>
           <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-1">
-            {events.map((e) => (
-              <EventCard key={e.id} event={e} />
+            {upcomingEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
             ))}
           </div>
         </div>

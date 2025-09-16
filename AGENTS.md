@@ -162,3 +162,17 @@ const data: MyRouteResponse = await response.json();
 - Production-ready with multiple deployment options
 - Comprehensive UI component library included
 - Type-safe API communication via shared interfaces
+import express from "express";
+import { getLeaderboard } from "./leaderboardController";
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(express.json());
+
+// Leaderboard route
+app.get("/api/leaderboard", getLeaderboard);
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

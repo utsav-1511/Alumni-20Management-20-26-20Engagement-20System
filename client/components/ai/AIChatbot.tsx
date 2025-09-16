@@ -44,18 +44,27 @@ export default function AIChatbot() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg }),
       });
-      const data = await res.json();
+
       if (!res.ok) {
-        const err = data?.error || data?.details || "AI error";
-        setMessages((m) => [...m, { from: "ai", text: `Error: ${err}` }]);
+        let errorText = `AI service error: ${res.status} ${res.statusText} - The requested endpoint was not found.`;
+        try {
+          const errorData = await res.json();
+          errorText = errorData?.error || errorData?.details || errorText;
+        } catch (e) { // if json parsing fails, keep the original error
+        }
+        setMessages((m) => [...m, { from: "ai", text: `Error: ${errorText}` }]);
       } else {
-        setMessages((m) => [
-          ...m,
+        const data = await res.json();        setMessages((m) => [          ...m,
           { from: "ai", text: data.reply || "No reply" },
         ]);
       }
-    } catch (e) {
-      setMessages((m) => [...m, { from: "ai", text: "Network error" }]);
+    } catch (e: any) {
+      let errorMessage = "Network error";
+      if (e instanceof SyntaxError) {
+        errorMessage = `JSON parse error: ${e.message}`;
+      } else {
+        errorMessage = `Network error: ${e.message}`;
+      }
     } finally {
       setLoading(false);
     }

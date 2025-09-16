@@ -10,6 +10,8 @@ export default function Landing() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Alumni");
+  const [enrollmentNumber, setEnrollmentnumber] = useState("");
+  const [college, setCollege] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -81,16 +83,25 @@ export default function Landing() {
               </p>
             </div>
 
+            {/* Update the login/signup toggle buttons */}
             <div className="flex gap-2 mb-4">
               <button
                 onClick={() => setMode("login")}
-                className={`flex-1 rounded-md px-3 py-2 ${mode === "login" ? "bg-primary text-white" : "border"}`}
+                className={`flex-1 rounded-md px-3 py-2 transition-all duration-200 ease-in-out hover:scale-105 active:scale-95 ${
+                  mode === "login"
+                    ? "bg-primary text-white hover:bg-primary/90"
+                    : "border hover:border-primary hover:text-primary"
+                }`}
               >
                 Login
               </button>
               <button
                 onClick={() => setMode("signup")}
-                className={`flex-1 rounded-md px-3 py-2 ${mode === "signup" ? "bg-accent text-white" : "border"}`}
+                className={`flex-1 rounded-md px-3 py-2 transition-all duration-200 ease-in-out hover:scale-105 active:scale-95 ${
+                  mode === "signup"
+                    ? "bg-primary text-white hover:bg-primary/90"
+                    : "border hover:border-primary hover:text-primary"
+                }`}
               >
                 Sign Up
               </button>
@@ -112,7 +123,7 @@ export default function Landing() {
                   Email
                 </label>
                 <Input
-                  placeholder="you@example.com"
+                  placeholder="text@hotmail.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
@@ -134,7 +145,37 @@ export default function Landing() {
               </div>
 
               {mode === "signup" && (
+                
                 <div>
+                <div>
+                <label className="block text-sm font-medium text-slate-700">
+                  Enrollment Number
+                </label>
+                <Input
+                  placeholder="Enrollment Number"
+                  value={enrollmentNumber}
+                  onChange={(e) => setEnrollmentnumber(e.target.value)}
+                  type="number"
+                  required
+                />
+                </div>
+                  <div>
+                  <label className="block text-sm font-medium text-slate-700">
+                    Select College
+                  </label>
+                  <select
+                    value={college}
+                    onChange={(e) => setCollege(e.target.value)}
+                    className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  >
+                    <option selected>Select College</option>
+                    <option>XYZ University</option>
+                    <option>Punjab University</option>
+                    <option>ABU University</option>
+                    <option>NIT Punjab</option>
+                  </select>
+                </div>
+                
                   <label className="block text-sm font-medium text-slate-700">
                     Role
                   </label>
@@ -143,6 +184,7 @@ export default function Landing() {
                     onChange={(e) => setRole(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                   >
+                    <option>Super Admin</option>
                     <option>Alumni</option>
                     <option>Student</option>
                     <option>Admin</option>
@@ -160,13 +202,18 @@ export default function Landing() {
                 </a>
               </div>
 
+              {/* Update the main submit button and skip login button */}
               <div className="flex flex-col gap-2">
-                <Button type="submit">
+                <Button 
+                  type="submit"
+                  className="transition-all duration-200 hover:scale-105 active:scale-95 hover:bg-primary/90"
+                >
                   {mode === "login" ? "Login" : "Sign Up"}
                 </Button>
 
                 <Button
                   variant="ghost"
+                  className="transition-all duration-200 hover:scale-105 active:scale-95 hover:bg-gray-100"
                   onClick={() => {
                     localStorage.setItem("DEV_BYPASS_AUTH", "true");
                     navigate("/dashboard");

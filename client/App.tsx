@@ -19,7 +19,8 @@ import AlumniLayout from "@/components/layout/AlumniLayout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Profile from "./pages/Profile";
 import OtherProfile from './pages/OtherProfiles';
-
+import EventRegistration from "./pages/EventRegistration";
+import Leaderboard from "./pages/Leaderboard";
 
 const queryClient = new QueryClient();
 
@@ -46,10 +47,13 @@ const App = () => (
             <Route path="events" element={<Events />} />
             <Route path="forum" element={<Forum />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="leaderboard" element={<Leaderboard />} />
             <Route path="/profile/:name" element={<OtherProfile />} />
+            <Route path="/profile/me" element={<Profile />} />
 
 
             <Route path="settings" element={<Settings />} />
+            <Route path="/events/register/:eventId" element={<EventRegistration />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Route>

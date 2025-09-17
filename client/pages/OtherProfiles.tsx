@@ -6,32 +6,12 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Briefcase, Calendar, Globe, Link as LinkIcon, Mail, MapPin, Users, GraduationCap } from "lucide-react";
+import { Briefcase, Calendar, Globe, Link as LinkIcon, Mail, MapPin, Users } from "lucide-react";
 import { useParams} from 'react-router-dom';
 
 
 interface Post { id: number; title: string; description: string; imageUrl?: string }
 interface Person { name: string; headline?: string; avatar?: string; profileUrl?: string }
-interface Me {
-  name: string;
-  designation: string;
-  batch: string;
-  location: string;
-  company: string;
-  bio: string;
-  avatar: string;
-  cover: string;
-  skills: string[];
-  contact: {
-    email: string;
-    linkedin: string;
-    twitter: string;
-    website: string;
-  };
-  posts: Post[];
-  connections: Person[];
-  college: string;  // Add this line
-}
 
 const initialUserData = {
   name: "Utsav Kushwaha",
@@ -77,27 +57,6 @@ const initialUserData = {
     { name: "Siddharth", headline: "Full‑stack Dev" },
     { name: "Riya", headline: "Security Engineer" },
   ] as Person[],
-  college: "RGPV University",  // Add this line with a default value
-};
-
-const alumniPosts = {
-  "Aditya Tiwari": [
-    {
-      id: 1,
-      title: "Launched New AI Product",
-      description: "Excited to share our latest innovation in AI technology",
-      imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
-    }
-  ],
-  "Aman Kumar": [
-    {
-      id: 2,
-      title: "Tech Leadership Summit 2025",
-      description: "Great speaking at the annual tech summit",
-      imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87"
-    }
-  ],
-  // Add more unique posts for each alumni
 };
 
 export default function OtherProfile() {
@@ -135,20 +94,11 @@ export default function OtherProfile() {
               </Avatar>
             </div>
             <div className="md:pb-2">
-              <h1 className="text-xl font-bold md:text-2xl">{user.name}</h1>
+              <h1 className="text-xl font-bold md:text-2xl color:black">{user.name}</h1>
               <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-                <span className="inline-flex items-center gap-1.5">
-                  <Briefcase className="h-4 w-4" /> {user.designation} • {user.company}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <GraduationCap className="h-4 w-4" /> {user.college}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" /> Batch {user.batch}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-4 w-4" /> {user.location}
-                </span>
+                <span className="inline-flex items-center gap-1.5"><Briefcase className="h-4 w-4" /> {user.designation} • {user.company}</span>
+                <span className="inline-flex items-center gap-1.5"><Calendar className="h-4 w-4" /> Batch {user.batch}</span>
+                <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" /> {user.location}</span>
               </div>
             </div>
             <div className="mt-2 flex w-full justify-center gap-2 md:ml-auto md:w-auto">
@@ -168,17 +118,6 @@ export default function OtherProfile() {
                 <CardDescription>{user.bio}</CardDescription>
               </CardHeader>
               <CardContent>
-                {/* Add this section */}
-                <div className="mb-6">
-                  <h3 className="text-sm font-medium mb-2">Education</h3>
-                  <div className="text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4" />
-                      <span>{user.college} • Batch of {user.batch}</span>
-                    </div>
-                  </div>
-                </div>
-                
                 <div className="flex flex-wrap gap-2">
                   {user.skills.map((s) => (
                     <span key={s} className="inline-flex items-center rounded-full border px-3 py-1 text-xs">
@@ -241,7 +180,7 @@ export default function OtherProfile() {
                   {connections.map((p) => (
                     <Link
                       key={p.name}
-                      to={`/profile/${encodeURIComponent(p.name)}?headline=${encodeURIComponent(p.headline || '')}`}
+                      to={`/otherprofiles?name=${encodeURIComponent(p.name)}${p.headline ? `&headline=${encodeURIComponent(p.headline)}` : ""}`}
                       className="group rounded-lg border p-3 transition-colors hover:bg-accent/40"
                     >
                       <div className="mb-2 h-10 w-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200" />

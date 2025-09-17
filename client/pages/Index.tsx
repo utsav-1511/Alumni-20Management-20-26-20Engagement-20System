@@ -6,6 +6,8 @@ import EventCard from "@/components/dashboard/EventCard";
 import { Users, CalendarDays, MessageSquare } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { eventsData } from "@/data/events";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 export default function Index() {
   const alumniData: AlumniItem[] = useMemo(
@@ -13,14 +15,14 @@ export default function Index() {
       {
         id: "1",
         name: "Anisha",
-        avatar: "https://i.pravatar.cc/120?img=12",
+        avatar: "",
         batch: "2020",
         company: "Software Developer, Infosys",
       },
       {
         id: "2",
         name: "Aman",
-        avatar: "https://i.pravatar.cc/120?img=3",
+        avatar: "",
         batch: "2018",
         company: "Business Analyst, TCS",
       },
@@ -41,9 +43,16 @@ export default function Index() {
       {
         id: "5",
         name: "Diksha",
-        avatar: "https://i.pravatar.cc/120?img=15",
+        avatar: "",
         batch: "2013",
         company: "Marketing Lead, Tech Mahindra",
+      },
+      {
+        id: "6",
+        name: "Ananya",
+        avatar: "",
+        batch: "2023",
+        company: "Software Developer, Adobe",
       },
     ],
     [],
@@ -52,7 +61,8 @@ export default function Index() {
   const upcomingEvents = eventsData.slice(0, 3); // Show only first 3 events
 
   return (
-    <div className="space-y-6">
+    
+    <div className="space-y-6 md:p-3 mx-auto max-w-7xl">
       {/* Summary widgets */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <SummaryWidget
@@ -96,6 +106,7 @@ export default function Index() {
       <Card className="lg:hidden border-dashed p-4 text-xs text-muted-foreground">
         Tip: Use the sidebar to explore the directory, events, and chat.
       </Card>
+      
     </div>
   );
 }

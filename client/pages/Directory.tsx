@@ -60,7 +60,7 @@ export default function Directory() {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 md:p-3">
       <div className="flex items-center justify-between gap-4">
         <h2 className="text-xl font-semibold">Alumni Directory</h2>
         <div className="flex items-center gap-2">

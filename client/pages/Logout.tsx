@@ -2,6 +2,7 @@ import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Logout() {
   const navigate = useNavigate();
   return (
@@ -17,7 +18,7 @@ export default function Logout() {
           Thank you for visiting Alumni Hub. See you again soon!
         </p>
         <div className="mt-6">
-          <Button onClick={() => navigate("/login")}>Login Again</Button>
+          <Button onClick={() => navigate("/")}>Login Again</Button>
         </div>
       </div>
     </div>

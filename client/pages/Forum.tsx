@@ -82,7 +82,7 @@ export default function Forum() {
   };
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-3 md:p-3">
       <div className="md:col-span-1">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-xl font-semibold">Forum & Chat</h2>

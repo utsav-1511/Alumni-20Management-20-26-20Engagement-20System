@@ -1,4 +1,5 @@
 import "./global.css";
+import AlumniStories from "@/pages/AlumniStories";
 
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
@@ -50,6 +51,8 @@ const App = () => (
             <Route path="leaderboard" element={<Leaderboard />} />
             <Route path="/profile/:name" element={<OtherProfile />} />
             <Route path="/profile/me" element={<Profile />} />
+            <Route path="/alumni-stories" element={<AlumniStories />} />
+
 
 
             <Route path="settings" element={<Settings />} />
@@ -69,3 +72,5 @@ if (!(window as any).__REACT_ROOT__) {
   (window as any).__REACT_ROOT__ = createRoot(container);
 }
 (window as any).__REACT_ROOT__.render(<App />);
+
+

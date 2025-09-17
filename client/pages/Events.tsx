@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 
 export default function Events() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 md:p-3">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Events</h2>
       </div>

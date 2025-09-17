@@ -22,7 +22,7 @@ export interface AlumniItem {
 
 export default function AlumniTable({ data }: { data: AlumniItem[] }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 md:p-3">
       {data.map((item) => (
         <div
           key={item.id}

@@ -17,7 +17,7 @@ export default function SummaryWidget({
 }) {
   return (
     <Card className={cn("shadow-sm", className)}>
-      <CardContent className="flex items-center justify-between p-4">
+      <CardContent className="flex items-center justify-between p-4 ">
         <div>
           <div className="text-xs uppercase tracking-wide text-muted-foreground">
             {title}
